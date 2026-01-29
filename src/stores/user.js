@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { defineStore } from "pinia";
 import { auth } from "../firebaseConfig";
 
@@ -40,6 +40,19 @@ export const useUserStore = defineStore('userStore', {
             } finally {
                 this.loadingUser = true
             }
+        },
+        currentUser(){
+            return new Promise((resolve, reject) =>{
+                const unsusbcribe = onAuthStateChanged(auth, user =>{
+                    if(user){
+                        this.userData = {email: user.email, uid: user.uid}
+                    }else{
+                        this.userData = null
+                    }
+                    resolve(user)
+                }, e => reject(e))
+                unsusbcribe()
+            })
         }
     }
 })
