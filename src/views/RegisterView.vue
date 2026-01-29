@@ -1,17 +1,20 @@
 <script setup>
   import { ref } from 'vue'
   import { useUserStore } from '../stores/user'
+  import { useRouter } from 'vue-router'
   
   const email = ref('')
   const password = ref('')
 
   const userStore = useUserStore()
+  const router = useRouter()
 
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
     if(!email.value || password.value.length < 8){
       return alert('Email or Passwor incorrect')
     }
-    userStore.registeruser(email.value, password.value)
+    await userStore.registeruser(email.value, password.value)
+    router.push('/')
   }
 
 </script>
@@ -26,4 +29,5 @@
     </form>
   </div>
 </template>
+
 
