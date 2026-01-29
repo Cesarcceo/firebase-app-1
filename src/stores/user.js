@@ -9,7 +9,7 @@ export const useUserStore = defineStore('userStore', {
     actions: {
         async registeruser(email, password){
             try {
-                const { user } = await createUserWithEmailAndPassword(auth, EmailAuthCredential, password) 
+                const { user } = await createUserWithEmailAndPassword(auth, email, password) 
                 console.log(user)               
             } catch (e) {
                 console.log(e)
