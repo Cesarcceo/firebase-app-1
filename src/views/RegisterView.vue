@@ -25,7 +25,7 @@
     <form @submit.prevent="handleSubmit">
       <input type="email" placeholder="enter email" v-model.trim="email">
       <input type="password" placeholder="enter password" v-model.trim="password">
-      <button type="submit" >Create user</button>
+      <button type="submit" :disabled="userStore.loadingUser">Create user</button>
     </form>
   </div>
 </template>
