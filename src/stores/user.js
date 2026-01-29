@@ -10,7 +10,7 @@ export const useUserStore = defineStore('userStore', {
         async registeruser(email, password){
             try {
                 const { user } = await createUserWithEmailAndPassword(auth, email, password) 
-                console.log(user)               
+                this.userData = {email: user.email, uid: user.uid}            
             } catch (e) {
                 console.log(e)
             }
