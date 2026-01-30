@@ -41,6 +41,23 @@ export const useUserStore = defineStore('userStore', {
                 this.loadingUser = true
             }
         },
+        // initiAuthNotification(){
+        //     if(!this.loadingUser) return
+
+        //     onAuthStateChanged(auth, (user) => {
+        //             if(user){
+        //                 this.userData = {email: user.email, uid: user.uid}
+        //             }else{
+        //                 this.userData = null
+        //             }
+        //             this.loadingUser = false
+        //         },
+        //         () => {
+        //             this.userData = null
+        //             this.loadingUser = false
+        //         }
+        //     )
+        // },
         currentUser(){
             return new Promise((resolve, reject) =>{
                 onAuthStateChanged(auth, user =>{

@@ -7,6 +7,7 @@ import RegisterView from "./views/RegisterView.vue";
 const requireAuth = async (to, from, next) => {
     const userStore = useUserStore()
     const user = await userStore.currentUser()
+    // const user = userStore.userData
     if(user){
         next()
     } else {
