@@ -43,7 +43,7 @@ export const useUserStore = defineStore('userStore', {
         },
         currentUser(){
             return new Promise((resolve, reject) =>{
-                const unsusbcribe = onAuthStateChanged(auth, user =>{
+                onAuthStateChanged(auth, user =>{
                     if(user){
                         this.userData = {email: user.email, uid: user.uid}
                     }else{
@@ -51,7 +51,6 @@ export const useUserStore = defineStore('userStore', {
                     }
                     resolve(user)
                 }, e => reject(e))
-                unsusbcribe()
             })
         }
     }
