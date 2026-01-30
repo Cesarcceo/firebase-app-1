@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { db } from "../firebaseConfig";
-import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { auth } from "../firebaseConfig";
 import { nanoid } from "nanoid";
 
@@ -40,6 +40,24 @@ export const useDatabaseStore = defineStore('database', {
                     ...objectDoc,
                     id: docRef.id
                 })
+            } catch (e) {
+                console.log(e)
+            } finally {
+
+            }
+        },
+        async removUrl(id){
+            try {
+                const docRef = doc(db, 'urls', id)
+                const docSnap = await getDoc(docRef)
+                if(!docSnap.exists()){
+                    throw new Error("don't exists this document")
+                }
+                if(docSnap.data().user !== auth.currentUser.uid){
+                    throw new Error("this document doesn't you")
+                }
+                await deleteDoc(docRef)
+                this.documents = this.documents.filter(item => item.id !== id)
             } catch (e) {
                 console.log(e)
             } finally {
