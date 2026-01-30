@@ -1,13 +1,15 @@
 <script setup>
-    import { useRoute } from 'vue-router';
+    import { useRoute, useRouter } from 'vue-router';
     import { useDatabaseStore } from '../stores/database';
-    import { onMounted, ref } from 'vue';
+    import { onMounted, ref } from 'vue';;
 
     const route = useRoute()
+    const router = useRouter()
     const databaseStore = useDatabaseStore()
 
     const handleSubmit = () => {
-        console.log('edito la url')
+        databaseStore.updateUrt(route.params.id, url.value)
+        router.push('/')
     }
 
     const url = ref('')
