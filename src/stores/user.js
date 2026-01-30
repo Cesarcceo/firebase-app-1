@@ -5,7 +5,8 @@ import { auth } from "../firebaseConfig";
 export const useUserStore = defineStore('userStore', {
     state: () => ({
         userData: null,
-        loadingUser: false
+        loadingUser: false,
+        loadingSession: false
     }),
     actions: {
         async registeruser(email, password){
