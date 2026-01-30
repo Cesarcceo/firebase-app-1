@@ -5,11 +5,13 @@ import { auth } from "../firebaseConfig";
 
 export const useDatabaseStore = defineStore('database', {
     state: () => ({
-        documents: []
+        documents: [],
+        loadingDoc: false
     }),
     actions: {
         async getUrls(){
             try {
+                this.loadingDoc = true
                 const q = query(collection(db, 'urls'), where("user", "==", auth.currentUser.uid))
                 const querySnapshot = await getDocs(q)
                 querySnapshot.forEach(doc => {
@@ -22,7 +24,7 @@ export const useDatabaseStore = defineStore('database', {
             } catch (e) {
                 console.log(e)
             } finally {
-
+                this.loadingDoc = false
             }
         }
     }
