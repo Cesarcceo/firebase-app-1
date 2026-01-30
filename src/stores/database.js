@@ -45,6 +45,23 @@ export const useDatabaseStore = defineStore('database', {
 
             }
         },
+        async reedUrl(id){
+            try {
+                const docRef = doc(db, 'urls', id)
+                const docSnap = await getDoc(docRef)
+
+                if(!docSnap.exists()){
+                    throw new Error("don't exists this document")
+                }
+                if(docSnap.data().user !== auth.currentUser.uid){
+                    throw new Error("you hasn't this document")
+                }
+
+                return docSnap.data().name
+            } catch (e) {
+                console.log(e)
+            }
+        },
         async removUrl(id){
             try {
                 const docRef = doc(db, 'urls', id)
