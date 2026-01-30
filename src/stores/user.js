@@ -1,6 +1,7 @@
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { defineStore } from "pinia";
 import { auth } from "../firebaseConfig";
+import { useDatabaseStore } from "./database";
 
 export const useUserStore = defineStore('userStore', {
     state: () => ({
@@ -32,6 +33,8 @@ export const useUserStore = defineStore('userStore', {
             }
         },
         async logoutUser(){
+            const databaseStore = useDatabaseStore()
+            databaseStore.$reset()
             this.loadingUser = true
             try {
                 await signOut(auth)
@@ -39,7 +42,7 @@ export const useUserStore = defineStore('userStore', {
             } catch (e) {
                 console.log(e)
             } finally {
-                this.loadingUser = true
+                this.loadingUser = false
             }
         },
         // initiAuthNotification(){
