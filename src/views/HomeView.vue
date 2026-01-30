@@ -1,5 +1,6 @@
 <script setup>
   import { useDatabaseStore } from '../stores/database';
+  import FormsDoc from '../components/FormsDoc.vue'
 
   const databaseStore = useDatabaseStore()
 
@@ -17,6 +18,7 @@
         {{ item.short }}
       </li>
     </ul>
+    <FormsDoc/>
   </div>
 </template>
 
