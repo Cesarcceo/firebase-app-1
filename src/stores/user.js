@@ -63,6 +63,8 @@ export const useUserStore = defineStore('userStore', {
         //     )
         // },
         currentUser(){
+            const databaseStore = useDatabaseStore()
+            databaseStore.$reset()
             return new Promise((resolve, reject) =>{
                 onAuthStateChanged(auth, user =>{
                     if(user){
