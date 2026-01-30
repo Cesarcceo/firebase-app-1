@@ -1,8 +1,10 @@
 <script setup>
   import { useDatabaseStore } from '../stores/database';
   import FormsDoc from '../components/FormsDoc.vue'
+  import { useRouter } from 'vue-router';
 
   const databaseStore = useDatabaseStore()
+  const router = useRouter()  
 
   databaseStore.getUrls()
 </script>
@@ -18,7 +20,9 @@
         {{ item.name }}
         <br>
         {{ item.short }}
-        <button class="my-3" @click="databaseStore.removUrl(item.id)">Remove</button>
+        <br>
+        <button @click="databaseStore.removUrl(item.id)">Remove</button>
+        <button @click="router.push(`/edit/${item.id}`)">Edit</button>
       </li>
     </ul>
     <FormsDoc/>
