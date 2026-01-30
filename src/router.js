@@ -6,6 +6,7 @@ import RegisterView from "./views/RegisterView.vue";
 
 const requireAuth = async (to, from, next) => {
     const userStore = useUserStore()
+    userStore.loadingSession = true
     const user = await userStore.currentUser()
     // const user = userStore.userData
     if(user){
@@ -13,7 +14,7 @@ const requireAuth = async (to, from, next) => {
     } else {
         next('/login')
     }
-    
+    userStore.loadingSession = false
 }
 
 const routes = [
