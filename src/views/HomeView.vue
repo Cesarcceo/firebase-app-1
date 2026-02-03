@@ -12,6 +12,7 @@
 <template>
   <div>
     <h1>Home</h1>
+    <FormsDoc/>
     <p v-if="databaseStore.loadingDoc">loading...</p>
     <ul v-else>
       <li v-for="item in databaseStore.documents" :key="item.id">
@@ -25,7 +26,6 @@
         <button @click="router.push(`/edit/${item.id}`)">Edit</button>
       </li>
     </ul>
-    <FormsDoc/>
   </div>
 </template>
 
