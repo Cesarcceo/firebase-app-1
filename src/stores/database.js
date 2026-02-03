@@ -29,6 +29,7 @@ export const useDatabaseStore = defineStore('database', {
         },
         async addUrl(name){
             try {
+                this.loadingDoc = true
                 const objectDoc = { 
                     name,
                     short: nanoid(6),
@@ -40,9 +41,10 @@ export const useDatabaseStore = defineStore('database', {
                     id: docRef.id
                 })
             } catch (e) {
-                console.log(e)
+                console.log(e.code)
+                return e.code
             } finally {
-
+                this.loadingDoc = false
             }
         },
         async updateUrt(id, name){
