@@ -1,9 +1,9 @@
 import { createApp } from 'vue'
-import './style.css'
 import App from './App.vue'
 import router from './router'
 import { createPinia } from 'pinia'
 import { useUserStore } from './stores/user'
+import { DatePicker } from 'ant-design-vue';
 
 // const app = createApp(App)
 
@@ -14,4 +14,4 @@ import { useUserStore } from './stores/user'
 
 // app.use(router)
 // app.mount('#app')
-createApp(App).use(createPinia()).use(router).mount('#app')
+createApp(App).use(createPinia()).use(router).use(DatePicker).mount('#app')
