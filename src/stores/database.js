@@ -49,6 +49,7 @@ export const useDatabaseStore = defineStore('database', {
         },
         async updateUrt(id, name){
             try {
+                this.loadingDoc = true
                 const docRef = doc(db, 'urls', id)
                 const docSnap = await getDoc(docRef)
         
@@ -66,10 +67,14 @@ export const useDatabaseStore = defineStore('database', {
                 this.documents = this.documents.map(item => item.id === id ? ({...item, name: name}) : item)
             } catch (e) {
                 console.log(e)
+                return e.code
+            } finally {
+                this.loadingDoc = false
             }
         },
         async reedUrl(id){
             try {
+                this.loadingDoc = true
                 const docRef = doc(db, 'urls', id)
                 const docSnap = await getDoc(docRef)
 
@@ -83,10 +88,14 @@ export const useDatabaseStore = defineStore('database', {
                 return docSnap.data().name
             } catch (e) {
                 console.log(e)
+                return e.code
+            } finally {
+                this.loadingDoc = false
             }
         },
         async removUrl(id){
             try {
+                this.loadingDoc = true
                 const docRef = doc(db, 'urls', id)
                 const docSnap = await getDoc(docRef)
                 if(!docSnap.exists()){
@@ -99,8 +108,9 @@ export const useDatabaseStore = defineStore('database', {
                 this.documents = this.documents.filter(item => item.id !== id)
             } catch (e) {
                 console.log(e)
+                return error.code
             } finally {
-
+                this.loadingDoc = false
             }
         }
     }
