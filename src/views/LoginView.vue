@@ -2,6 +2,7 @@
   import { reactive } from 'vue'
   import { useUserStore } from '../stores/user'
   import { useRouter } from 'vue-router'
+  import { message } from 'ant-design-vue'
   
   const userStore = useUserStore()
   const router = useRouter()
@@ -13,8 +14,20 @@
 
   const onFinish = async values => {
     console.log('Success:', values);
-    await userStore.loginUser(formState.email, formState.password)
-    router.push('/')
+    const error = await userStore.loginUser(formState.email, formState.password)
+    if(!error){
+      router.push('/')
+      return;
+    }
+
+    switch(error){
+      case "auth/invalid-credential":
+        message.error("Error to Login, pleace enter the correct email and password");
+        break;
+      default: 
+        message.error("Error from farebase")
+        break;
+    }
   };
   const onFinishFailed = errorInfo => {
     console.log('Failed:', errorInfo);
