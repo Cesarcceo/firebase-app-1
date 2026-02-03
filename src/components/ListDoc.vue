@@ -1,25 +1,41 @@
 <script setup>
-  import { useDatabaseStore } from '../stores/database';
-  import { useRouter } from 'vue-router';
+    import { message } from 'ant-design-vue';
+    import { useDatabaseStore } from '../stores/database';
+    import { useRouter } from 'vue-router';
 
-  const databaseStore = useDatabaseStore()
-  const router = useRouter()  
+    const databaseStore = useDatabaseStore()
+    const router = useRouter()  
 
-  databaseStore.getUrls()
+    const confirm = async urlId => {
+        await databaseStore.removUrl(urlId)
+        message.success('the document was removed')
+    }
+    
+    const cancel = () => {}
+
+    databaseStore.getUrls()
 </script>
 
 <template>
   <div>
     <p v-if="databaseStore.loadingDoc">loading...</p>
 
-    <a-space direction="vertical" v-if="!databaseStore.loadingDoc" style="width: 100%">
+    <a-space direction="vertical" v-else style="width: 100%">
         <a-card
             v-for="item in databaseStore.documents" :key="item.id"
             :title="item.short"
         >
             <template #extra>
                 <a-space>
-                    <a-button danger @click="databaseStore.removUrl(item.id)">Remove</a-button>
+                    <a-popconfirm
+                        title="Are you sure to remove this document?"
+                        ok-text="Yes"
+                        cancel-text="No"
+                        @confirm="confirm(item.id)"
+                        @cancel="cancel"
+                    >
+                        <a-button danger >Remove</a-button>
+                    </a-popconfirm>
                     <a-button @click="router.push(`/edit/${item.id}`)">Edit</a-button>
                 </a-space>
             </template>
