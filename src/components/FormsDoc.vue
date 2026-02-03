@@ -1,6 +1,7 @@
 <script setup>
     import { useDatabaseStore } from '../stores/database';
     import { reactive } from 'vue';
+    import { message } from 'ant-design-vue';
 
     const databaseStore = useDatabaseStore()
 
@@ -8,8 +9,18 @@
         url: ''
     })
 
-    const onFinish = ()=> {
-        databaseStore.addUrl(formState.url)
+    const onFinish = async values => {
+        console.log('Success:', values);
+        const error = await databaseStore.addUrl(formState.url)
+        if(!error){
+            message.success('Url Created')
+            return;
+        }
+
+        switch(error){
+            default:
+                message.error('Error from farebase')
+        }
     }
 </script>
 
@@ -34,7 +45,13 @@
             <a-input v-model:value="formState.url"></a-input>
         </a-form-item>
         <a-form-item>
-            <a-button type="primary" html-type="submit">Save</a-button>
+            <a-button 
+                type="primary" 
+                html-type="submit"
+                :loading="databaseStore.loadingDoc"
+                :disabled="databaseStore.loadingDoc"
+            >
+                Save</a-button>
         </a-form-item>
     </a-form>
 </template>
