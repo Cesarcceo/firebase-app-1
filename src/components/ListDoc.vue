@@ -7,8 +7,8 @@
     const router = useRouter()  
 
     const confirm = async urlId => {
-        await databaseStore.removUrl(urlId)
-        message.success('the document was removed')
+        const error = await databaseStore.removUrl(urlId)
+        return !error? message.success('the document was removed'): message.error(error)
     }
     
     const cancel = () => {}
