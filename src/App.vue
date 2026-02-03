@@ -1,6 +1,7 @@
 <script setup>
   import { useRouter } from 'vue-router'
-import { useUserStore } from './stores/user'
+  import { useUserStore } from './stores/user'
+  import 'ant-design-vue/dist/reset.css';
 
   const userStore = useUserStore()
   const router = useRouter()
@@ -12,18 +13,36 @@ import { useUserStore } from './stores/user'
 </script>
 
 <template>
-  <div>
-    <h1>APP Base</h1>
-    <nav v-if="!userStore.loadingSession">
-      <router-link v-if="userStore.userData" to="/">Home</router-link> | 
-      <router-link v-if="!userStore.userData" to="/login">Login</router-link> |
-      <router-link v-if="!userStore.userData" to="/register">Register</router-link> |
-      <button v-if="userStore.userData" @click="logout">Logout</button>
-    </nav>
-    <div v-else>
-      <h1>Loading...</h1>
-    </div>
-    <router-view></router-view>
-  </div>
+  <a-layout>
+    <a-layout-header v-if="!userStore.loadingSession">
+      <a-menu 
+        v-model:selectedKeys="selectedKeys"
+        theme="dark" 
+        mode="horizontal" 
+        :style="{ lineHight: '64px'}"
+      >
+        <a-menu-item v-if="userStore.userData" key="home"> 
+          <router-link to="/">Home</router-link>
+        </a-menu-item>
+        <a-menu-item v-if="!userStore.userData" key="login">
+          <router-link  to="/login">Login</router-link>
+        </a-menu-item>
+        <a-menu-item v-if="!userStore.userData" key="register">
+          <router-link to="/register">Register</router-link>
+        </a-menu-item key="logout">
+        <a-menu-item v-if="userStore.userData" @click="logout">
+          Logout
+        </a-menu-item>
+      </a-menu>
+    </a-layout-header>
+    <a-layout-content style="padding: 0 50px">
+      <div :style="{ background: '#fff', padding: '24px', minHeight: '280px'}">
+        <div v-if="userStore.loadingSession">
+          <h1>Loading...</h1>
+        </div>
+        <router-view></router-view>
+      </div>
+    </a-layout-content>
+  </a-layout>
 </template>
 
