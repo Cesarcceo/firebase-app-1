@@ -17,6 +17,7 @@ export const useUserStore = defineStore('userStore', {
                 this.userData = {email: user.email, uid: user.uid}            
             } catch (e) {
                 console.log(e)
+                return e.code
             }finally{
                 this.loadingUser = false
             }
@@ -28,6 +29,7 @@ export const useUserStore = defineStore('userStore', {
                 this.userData = { email: user.email, password: user.password }
             } catch (e) {
                 console.log(e)
+                return e.code
             } finally{ 
                 this.loadingUser = false
             }
