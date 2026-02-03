@@ -4,6 +4,7 @@ import router from './router'
 import { createPinia } from 'pinia'
 import { useUserStore } from './stores/user'
 import { DatePicker } from 'ant-design-vue';
+import 'ant-design-vue/es/message/style'
 
 // const app = createApp(App)
 
