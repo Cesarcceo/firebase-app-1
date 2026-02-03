@@ -2,6 +2,7 @@
   import { reactive } from 'vue'
   import { useUserStore } from '../stores/user'
   import { useRouter } from 'vue-router'
+import { message } from 'ant-design-vue'
 
   const userStore = useUserStore()
   const router = useRouter()
@@ -14,8 +15,21 @@
 
   const onFinish = async values => {
     console.log('Success:', values);
-    await userStore.registeruser(formState.email, formState.password)
-    router.push('/')
+    const error = await userStore.registeruser(formState.email, formState.password)
+    if(!error){
+      message.success('User created')
+      router.push('/')
+      return;
+    }
+
+    switch(error){
+      case "auth/email-already-in-use":
+        message.error("this email already in use");
+        break;
+      default: 
+        message.error("Error from farebase")
+        break;
+    }
   };
   const onFinishFailed = errorInfo => {
     console.log('Failed:', errorInfo);
