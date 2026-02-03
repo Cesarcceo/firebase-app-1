@@ -1,10 +1,16 @@
 <script setup>
-  import { useRouter } from 'vue-router'
+  import { useRoute, useRouter } from 'vue-router'
   import { useUserStore } from './stores/user'
   import 'ant-design-vue/dist/reset.css';
+  import { ref, watch } from 'vue';
 
   const userStore = useUserStore()
   const router = useRouter()
+  const route = useRoute()
+
+  const selectedKeys = ref([route.name])
+  
+  watch(() => route.name, () => selectedKeys.value = [route.name]) 
 
   const logout = async() => {
     await userStore.logoutUser()
