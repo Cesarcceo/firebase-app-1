@@ -52,7 +52,6 @@
             required: true, 
             min:8, 
             whitespace: true, 
-            type: 'password',
             message: 'Enter the password'
             }]"
         >
